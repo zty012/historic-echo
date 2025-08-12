@@ -6,9 +6,15 @@ type SidePanelProps = {
   open: boolean;
   poem: Poem | null;
   onClose: () => void;
+  onExplore: () => void;
 };
 
-export default function SidePanel({ open, poem, onClose }: SidePanelProps) {
+export default function SidePanel({
+  open,
+  poem,
+  onClose,
+  onExplore,
+}: SidePanelProps) {
   return (
     <div
       className={cn(
@@ -33,7 +39,10 @@ export default function SidePanel({ open, poem, onClose }: SidePanelProps) {
         ))}
       </div>
       <div className="flex-1" />
-      <div className="bg-black/70 rounded-full flex items-center justify-center gap-2 text-lg py-3 active:scale-90 transition cursor-pointer">
+      <div
+        className="bg-black/70 rounded-full flex items-center justify-center gap-2 text-lg py-3 active:scale-90 transition cursor-pointer"
+        onClick={onExplore}
+      >
         <span>前往探索</span>
         <ChevronRight />
       </div>
