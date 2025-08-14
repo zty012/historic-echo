@@ -1,6 +1,9 @@
 import gsap from "gsap";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import a1 from "./assets/a1.png";
+import a2 from "./assets/a2.png";
+import a3 from "./assets/a3.png";
 import ChinaMap from "./components/ChinaMap";
 import SidePanel from "./components/SidePanel";
 import type { Poem } from "./types";
@@ -12,13 +15,14 @@ const POEMS: Poem[] = [
     title: "沁园春·雪",
     place: "陕西省 榆林市 清涧县 高杰村镇 袁家沟村",
     year: "1936",
-    coords: [110.47229665132853, 37.164619609513736],
+    coords: [110, 37.164619609513736],
     excerpt: [
       "北国风光，千里冰封，万里雪飘。望长城内外，惟余莽莽；大河上下，顿失滔滔。山舞银蛇，原驰蜡象，欲与天公试比高。",
       "须晴日，看红装素裹，分外妖娆。",
       "江山如此多娇，引无数英雄竞折腰。惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。一代天骄，成吉思汗，只识弯弓射大雕。",
       "俱往矣，数风流人物，还看今朝。",
     ],
+    images: [a1, a2, a3],
   },
   {
     id: "changsha",
@@ -32,6 +36,7 @@ const POEMS: Poem[] = [
       "携来百侣曾游，忆往昔峥嵘岁月稠。恰同学少年，风华正茂；书生意气，挥斥方遒。指点江山，激扬文字，粪土当年万户侯。",
       "曾记否，到中流击水，浪遏飞舟？",
     ],
+    images: [],
   },
   {
     id: "chongyang",
@@ -43,6 +48,7 @@ const POEMS: Poem[] = [
       "人生易老天难老，岁岁重阳。今又重阳，战地黄花分外香。",
       "一年一度秋风劲，不似春光。胜似春光，寥廓江天万里霜。",
     ],
+    images: [],
   },
 ];
 
@@ -69,7 +75,6 @@ export default function App() {
       pointerEvents: "auto",
       ease: "power3.out",
     });
-    setSelected(null);
   }
   async function back() {
     // 黑屏切换回地图
@@ -125,7 +130,7 @@ export default function App() {
       );
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, [page, selected]);
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-black text-white">
@@ -159,22 +164,13 @@ export default function App() {
         className="absolute h-full w-full overflow-hidden opacity-0 pointer-events-none"
         ref={el2}
       >
-        <img
-          src="https://picsum.photos/1920/1080?1"
-          className="w-full h-full object-cover absolute inset-0 opacity-0"
-        />
-        <img
-          src="https://picsum.photos/1920/1080?2"
-          className="w-full h-full object-cover absolute inset-0 opacity-0"
-        />
-        <img
-          src="https://picsum.photos/1920/1080?3"
-          className="w-full h-full object-cover absolute inset-0 opacity-0"
-        />
-        <img
-          src="https://picsum.photos/1920/1080?4"
-          className="w-full h-full object-cover absolute inset-0 opacity-0"
-        />
+        {selected?.images.map((img, index) => (
+          <img
+            key={index}
+            src={img}
+            className="w-full h-full object-cover absolute inset-0 opacity-0"
+          />
+        ))}
         <div className="flex absolute top-8 left-8 right-8 gap-4">
           <div
             className="backdrop-blur-sm bg-black/10 border-2 border-black/20 rounded-full p-4 active:scale-90 transition"

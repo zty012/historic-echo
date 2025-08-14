@@ -19,4 +19,6 @@ export type Poem = {
   coords: LngLat;
   /** 摘句（若干行） */
   excerpt: string[];
+  /** 相关图片链接 */
+  images: string[];
 };
