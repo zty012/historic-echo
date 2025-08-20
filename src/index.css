@@ -13,4 +13,432 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* 性能优化 */
+  * {
+    will-change: auto;
+  }
+
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}
+
+@layer components {
+  /* 优化的自定义动画 */
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -5px, 0);
+    }
+  }
+
+  @keyframes glow {
+    0%,
+    100% {
+      box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes pulse-slow {
+    0%,
+    100% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 0.9;
+    }
+  }
+
+  @keyframes slide-in-left {
+    0% {
+      transform: translateX(-100%) scale(0.9);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-out-left {
+    0% {
+      transform: translateX(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-100%) scale(0.9);
+      opacity: 0;
+    }
+  }
+
+  @keyframes fade-in-up {
+    0% {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  /* 动画延迟类 */
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+  .animation-delay-700 {
+    animation-delay: 700ms;
+  }
+  .animation-delay-1000 {
+    animation-delay: 1000ms;
+  }
+
+  /* 优化的自定义动画类 */
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .animate-glow {
+    animation: glow 3s ease-in-out infinite alternate;
+    will-change: box-shadow;
+  }
+
+  .animate-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .animate-shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    animation: shimmer 3s infinite;
+    will-change: transform;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 4s ease-in-out infinite;
+    will-change: opacity;
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 0.6s ease-out;
+  }
+
+  .animate-slide-out-left {
+    animation: slide-out-left 0.6s ease-in;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out;
+  }
+
+  .animate-ripple {
+    animation: ripple 0.6s ease-out;
+  }
+
+  /* 优化的毛玻璃效果 */
+  .glass {
+    backdrop-filter: blur(12px) saturate(150%);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .glass-dark {
+    backdrop-filter: blur(12px) saturate(150%);
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* 渐变边框 */
+  .gradient-border {
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+    padding: 2px;
+    border-radius: 12px;
+  }
+
+  .gradient-border-content {
+    background: inherit;
+    border-radius: 10px;
+  }
+
+  /* 文字渐变 */
+  .text-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* 阴影效果 */
+  .shadow-glow {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+
+  .shadow-glow-red {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+  }
+
+  .shadow-glow-green {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+  }
+
+  /* 优化的悬浮效果 */
+  .hover-lift {
+    transition: transform 0.2s ease;
+    will-change: transform;
+  }
+
+  .hover-lift:hover {
+    transform: translate3d(0, -2px, 0);
+  }
+
+  /* 优化的按钮样式 */
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500
+           text-white font-medium py-3 px-6 rounded-xl transition-all duration-200
+           shadow-lg hover:shadow-xl transform hover:scale-102 active:scale-98;
+    will-change: transform;
+  }
+
+  .btn-secondary {
+    @apply bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20
+           hover:border-white/30 text-white font-medium py-3 px-6 rounded-xl
+           transition-all duration-200 shadow-lg;
+  }
+
+  /* 输入框样式 */
+  .input-glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 focus:border-white/40
+           text-white placeholder-white/60 rounded-xl px-4 py-3
+           transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50;
+  }
+
+  /* 卡片样式 */
+  .card-glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl
+           shadow-xl hover:shadow-2xl transition-all duration-300 p-6;
+  }
+
+  /* 滚动条样式 */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-custom {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+}
+
+@layer utilities {
+  /* 文字选择样式 */
+  .select-none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* 3D变换 */
+  .perspective {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* 混合模式 */
+  .mix-blend-overlay {
+    mix-blend-mode: overlay;
+  }
+
+  .mix-blend-multiply {
+    mix-blend-mode: multiply;
+  }
+
+  .mix-blend-screen {
+    mix-blend-mode: screen;
+  }
+
+  /* 自定义过渡 */
+  .transition-smooth {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .transition-bounce {
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  /* 模糊效果 */
+  .blur-xs {
+    filter: blur(2px);
+  }
+
+  .blur-sm {
+    filter: blur(4px);
+  }
+
+  .blur-md {
+    filter: blur(8px);
+  }
+
+  .blur-lg {
+    filter: blur(16px);
+  }
+
+  .blur-xl {
+    filter: blur(24px);
+  }
+}
+
+/* 响应式字体大小 */
+@media (max-width: 640px) {
+  .text-responsive-sm {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+
+  .text-responsive-md {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+  }
+
+  .text-responsive-lg {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .text-responsive-xl {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+}
+
+/* 深色模式优化 */
+@media (prefers-color-scheme: dark) {
+  .auto-dark {
+    color-scheme: dark;
+  }
+}
+
+/* 减少动画（用户偏好） */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 低性能设备优化 */
+@media (max-width: 768px) {
+  .animate-float,
+  .animate-glow,
+  .animate-shimmer,
+  .animate-pulse-slow {
+    animation: none !important;
+  }
+
+  .glass,
+  .glass-dark {
+    backdrop-filter: blur(8px) !important;
+  }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+  .glass,
+  .glass-dark {
+    border: 2px solid white;
+    background: rgba(0, 0, 0, 0.8);
+  }
 }
