@@ -222,7 +222,7 @@ export default function SidePanel({
             ref={(el) => {
               if (el) linesRef.current[i] = el;
             }}
-            className="text-white/95 leading-relaxed text-base relative"
+            className="text-white/95 leading-relaxed text-base relative select-none pointer-events-none"
           >
             {line}
             {line && line === poem?.excerpt[i] && (
