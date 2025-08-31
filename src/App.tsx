@@ -42,7 +42,7 @@ const POEMS: Poem[] = [
       "江山如此多娇，引无数英雄竞折腰。惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。一代天骄，成吉思汗，只识弯弓射大雕。",
       "俱往矣，数风流人物，还看今朝。",
     ],
-    audio: qbyriyihuaAudio,
+    audio: qbyriyxtAudio,
     analysis: [
       {
         title: "写作手法解析",
@@ -82,7 +82,7 @@ const POEMS: Poem[] = [
       "携来百侣曾游，忆往昔峥嵘岁月稠。恰同学少年，风华正茂；书生意气，挥斥方遒。指点江山，激扬文字，粪土当年万户侯。",
       "曾记否，到中流击水，浪遏飞舟？",
     ],
-    audio: qbyriyxtAudio,
+    audio: qbyriyihuaAudio,
     analysis: [
       {
         title: "写作手法解析",
