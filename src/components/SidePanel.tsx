@@ -18,10 +18,13 @@ export default function SidePanel({
   onExplore,
 }: SidePanelProps) {
   const [displayedText, setDisplayedText] = useState<string[]>([]);
+  const [isPlaying, setIsPlaying] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const linesRef = useRef<HTMLDivElement[]>([]);
   const buttonRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioButtonRef = useRef<HTMLDivElement>(null);
 
   // 打字机效果
   useEffect(() => {
@@ -74,6 +77,14 @@ export default function SidePanel({
     return () => clearTimeout(timer);
   }, [open, poem]);
 
+  // 单独处理音频状态重置
+  useEffect(() => {
+    if (audioRef.current && isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  }, [poem?.id, isPlaying]);
+
   // 面板进入动画
   useEffect(() => {
     if (!panelRef.current) return;
@@ -125,6 +136,22 @@ export default function SidePanel({
           },
         );
       }
+
+      // 音频按钮动画
+      if (audioButtonRef.current && poem?.audio) {
+        gsap.fromTo(
+          audioButtonRef.current,
+          { opacity: 0, y: 20, scale: 0.9 },
+          {
+            duration: 0.4,
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            ease: "power2.out",
+            delay: 0.9,
+          },
+        );
+      }
     } else {
       // 面板退出动画（简化）
       gsap.to(panelRef.current, {
@@ -135,7 +162,7 @@ export default function SidePanel({
         ease: "power2.in",
       });
     }
-  }, [open]);
+  }, [open, poem?.audio]);
 
   const handleClose = () => {
     if (panelRef.current) {
@@ -162,6 +189,48 @@ export default function SidePanel({
       });
     }
     onExplore();
+  };
+
+  const handleAudioToggle = () => {
+    if (!poem?.audio || !audioRef.current) return;
+
+    // 按钮点击动画
+    if (audioButtonRef.current) {
+      gsap.to(audioButtonRef.current, {
+        duration: 0.1,
+        scale: 0.95,
+        ease: "power2.out",
+        yoyo: true,
+        repeat: 1,
+        onComplete: () => {
+          // 播放状态切换时的额外动画
+          if (audioButtonRef.current) {
+            gsap.to(audioButtonRef.current, {
+              duration: 0.3,
+              rotationY: isPlaying ? 0 : 5,
+              ease: "power2.out",
+            });
+          }
+        },
+      });
+    }
+
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const handleAudioEnded = () => {
+    setIsPlaying(false);
+  };
+
+  const handleAudioError = () => {
+    setIsPlaying(false);
+    console.error("音频播放失败");
   };
 
   return (
@@ -233,6 +302,17 @@ export default function SidePanel({
           </p>
         ))}
       </div>
+
+      {/* 音频播放按钮 */}
+      {poem?.audio && (
+        <audio
+          ref={audioRef}
+          src={poem.audio}
+          onEnded={handleAudioEnded}
+          onError={handleAudioError}
+          controls
+        />
+      )}
 
       {/* 探索按钮 */}
       <div

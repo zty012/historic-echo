@@ -33,4 +33,6 @@ export type Poem = {
   excerpt: string[];
   /** 解析内容 */
   analysis?: AnalysisSection[];
+  /** 朗诵音频URL */
+  audio?: string;
 };

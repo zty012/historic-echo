@@ -13,6 +13,9 @@ import c1 from "./assets/c1.png";
 import c2 from "./assets/c2.png";
 import c3 from "./assets/c3.png";
 import c4 from "./assets/c4.png";
+import qbyriyihuaAudio from "./assets/沁园春长沙.m4a";
+import qbyriyxtAudio from "./assets/沁园春雪.m4a";
+import cdshziisyhAudio from "./assets/采桑子重阳.m4a";
 import AnimatedBackground from "./components/AnimatedBackground";
 import ChinaMap from "./components/ChinaMap";
 import PerformanceIndicator from "./components/PerformanceIndicator";
@@ -39,6 +42,7 @@ const POEMS: Poem[] = [
       "江山如此多娇，引无数英雄竞折腰。惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。一代天骄，成吉思汗，只识弯弓射大雕。",
       "俱往矣，数风流人物，还看今朝。",
     ],
+    audio: qbyriyihuaAudio,
     analysis: [
       {
         title: "写作手法解析",
@@ -78,6 +82,7 @@ const POEMS: Poem[] = [
       "携来百侣曾游，忆往昔峥嵘岁月稠。恰同学少年，风华正茂；书生意气，挥斥方遒。指点江山，激扬文字，粪土当年万户侯。",
       "曾记否，到中流击水，浪遏飞舟？",
     ],
+    audio: qbyriyxtAudio,
     analysis: [
       {
         title: "写作手法解析",
@@ -115,6 +120,7 @@ const POEMS: Poem[] = [
       "人生易老天难老，岁岁重阳。今又重阳，战地黄花分外香。",
       "一年一度秋风劲，不似春光。胜似春光，寥廓江天万里霜。",
     ],
+    audio: cdshziisyhAudio,
     analysis: [
       {
         title: "写作手法解析",
