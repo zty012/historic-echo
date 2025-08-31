@@ -191,39 +191,6 @@ export default function SidePanel({
     onExplore();
   };
 
-  const handleAudioToggle = () => {
-    if (!poem?.audio || !audioRef.current) return;
-
-    // 按钮点击动画
-    if (audioButtonRef.current) {
-      gsap.to(audioButtonRef.current, {
-        duration: 0.1,
-        scale: 0.95,
-        ease: "power2.out",
-        yoyo: true,
-        repeat: 1,
-        onComplete: () => {
-          // 播放状态切换时的额外动画
-          if (audioButtonRef.current) {
-            gsap.to(audioButtonRef.current, {
-              duration: 0.3,
-              rotationY: isPlaying ? 0 : 5,
-              ease: "power2.out",
-            });
-          }
-        },
-      });
-    }
-
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current.play();
-      setIsPlaying(true);
-    }
-  };
-
   const handleAudioEnded = () => {
     setIsPlaying(false);
   };
